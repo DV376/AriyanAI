@@ -1,0 +1,34 @@
+#CODE
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePreferences } from "@/hooks/usePreferences";
+
+const Index = () => {
+  const navigate = useNavigate();
+  const { preferences, isLoading } = usePreferences();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (preferences.setupCompleted) {
+        navigate("/home");
+      } else {
+        navigate("/setup");
+      }
+    }
+  }, [preferences.setupCompleted, isLoading, navigate]);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="text-center">
+        <div className="animate-pulse">
+          <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            AwareSense Lite
+          </h1>
+          <p className="text-muted-foreground mt-4">Loading...</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Index;
